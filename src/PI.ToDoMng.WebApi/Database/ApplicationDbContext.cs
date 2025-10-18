@@ -4,11 +4,7 @@ namespace PI.ToDoMng.WebApi.Database;
 
 public class ApplicationDbContext : DbContext
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
-        optionsBuilder.UseNpgsql("Host=postgres;Database=ToDoMng;Username=admin;Password=admin", options =>
-        {
-
-        });
     }
 }
