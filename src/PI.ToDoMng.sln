@@ -5,10 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PI.ToDoMng.WebApi", "PI.ToDoMng.WebApi\PI.ToDoMng.WebApi.csproj", "{7CF1B4C0-584E-47A1-83F7-9778897D7523}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PI.ToDoMng.Aspire.AppHost", "PI.ToDoMng.Aspire.AppHost\PI.ToDoMng.Aspire.AppHost.csproj", "{3C15E012-41A1-4878-AEEA-861D8FA44900}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PI.ToDoMng.Aspire.ServiceDefaults", "PI.ToDoMng.Aspire.ServiceDefaults\PI.ToDoMng.Aspire.ServiceDefaults.csproj", "{CF461C03-A4A0-4C8B-8309-63612B94F195}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,13 +18,5 @@ Global
 		{7CF1B4C0-584E-47A1-83F7-9778897D7523}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CF1B4C0-584E-47A1-83F7-9778897D7523}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CF1B4C0-584E-47A1-83F7-9778897D7523}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3C15E012-41A1-4878-AEEA-861D8FA44900}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C15E012-41A1-4878-AEEA-861D8FA44900}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C15E012-41A1-4878-AEEA-861D8FA44900}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C15E012-41A1-4878-AEEA-861D8FA44900}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CF461C03-A4A0-4C8B-8309-63612B94F195}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF461C03-A4A0-4C8B-8309-63612B94F195}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF461C03-A4A0-4C8B-8309-63612B94F195}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF461C03-A4A0-4C8B-8309-63612B94F195}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

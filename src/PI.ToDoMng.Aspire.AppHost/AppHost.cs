@@ -2,6 +2,7 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 var mysql = builder
     .AddMySql("mysql")
+    .WithDataVolume()
     .WithLifetime(ContainerLifetime.Persistent);
 
 var mysqldb = mysql
