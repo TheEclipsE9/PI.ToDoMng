@@ -8,12 +8,14 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
-      - postgres
+      - mysql
 
-  postgres:
-    image: postgres:17
+  mysql:
+    image: mysql:9
     environment:
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_USER=admin
+      - MYSQL_DATABASE=ToDoMng
+      - MYSQL_USER=ToDoMngAdmin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_ROOT_PASSWORD=root
     ports:
-      - "5432:5432"
+      - "3306:3306"
