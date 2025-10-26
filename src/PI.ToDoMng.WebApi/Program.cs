@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PI.ToDoMng.WebApi;
 using PI.ToDoMng.WebApi.Database;
@@ -26,5 +27,13 @@ if (app.Environment.IsDevelopment())
     // Seed data
     DbInitializer.Seed(dbContext);
 }
+
+app.MapGet("/todoitems", (ApplicationDbContext db) =>
+{
+    var todoitems = db.ToDoItems.ToList();
+
+
+    return todoitems;
+});
 
 app.Run();
