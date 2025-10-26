@@ -9,10 +9,10 @@ if (string.IsNullOrEmpty(conStr))
     throw new InvalidOperationException($"Connection string '{ToDoMngConstants.Database.TODOMNG_CON_STR_KEY}' not found or empty.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySQL(conStr, mySqlOptions =>
+    options.UseSqlServer(conStr, msSqlOptions =>
     {
         var timeOut = TimeSpan.FromSeconds(30).Seconds;
-        mySqlOptions.CommandTimeout(timeOut);
+        msSqlOptions.CommandTimeout(timeOut);
     }));
 
 var app = builder.Build();
@@ -22,7 +22,7 @@ if (app.Environment.IsDevelopment())
     using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     dbContext.Database.Migrate();
-    
+
     // Seed data
     DbInitializer.Seed(dbContext);
 }

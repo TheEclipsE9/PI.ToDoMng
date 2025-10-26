@@ -4,18 +4,6 @@ services:
       context: PI.ToDoMng.WebApi
       dockerfile: Dockerfile
     ports:
-      - "8111:8080"
+      - "8080:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    depends_on:
-      - mysql
-
-  mysql:
-    image: mysql:9
-    environment:
-      - MYSQL_DATABASE=ToDoMng
-      - MYSQL_USER=ToDoMngAdmin
-      - MYSQL_PASSWORD=admin
-      - MYSQL_ROOT_PASSWORD=root
-    ports:
-      - "3306:3306"
