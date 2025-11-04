@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using PI.ToDoMng.WebApi.Domain.Entities;
 
-namespace PI.ToDoMng.WebApi.Database;
+namespace PI.ToDoMng.WebApi.Infrastructure.Database;
 
 public class ApplicationDbContext : DbContext
 {

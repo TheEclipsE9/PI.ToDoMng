@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PI.ToDoMng.WebApi;
-using PI.ToDoMng.WebApi.Database;
+using PI.ToDoMng.WebApi.Api.Endpoints;
+using PI.ToDoMng.WebApi.Application.Services;
+using PI.ToDoMng.WebApi.Infrastructure.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,28 +14,14 @@ if (string.IsNullOrEmpty(conStr))
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(conStr, msSqlOptions =>
     {
-        var timeOut = TimeSpan.FromSeconds(30).Seconds;
+        var timeOut = TimeSpan.FromSeconds(5).Seconds;
         msSqlOptions.CommandTimeout(timeOut);
     }));
 
+builder.Services.AddScoped<AuthService>();
+
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    using var scope = app.Services.CreateScope();
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    dbContext.Database.Migrate();
-
-    // Seed data
-    DbInitializer.Seed(dbContext);
-}
-
-app.MapGet("/todoitems", (ApplicationDbContext db) =>
-{
-    var todoitems = db.ToDoItems.ToList();
-
-
-    return todoitems;
-});
+AuthEndpoints.Map(app);
 
 app.Run();

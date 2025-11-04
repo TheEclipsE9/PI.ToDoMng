@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PI.ToDoMng.WebApi.Database;
+using PI.ToDoMng.WebApi.Infrastructure.Database;
 
 #nullable disable
 
-namespace PI.ToDoMng.WebApi.Database.Migrations
+namespace PI.ToDoMng.WebApi.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20251026184140_InitialCreate")]

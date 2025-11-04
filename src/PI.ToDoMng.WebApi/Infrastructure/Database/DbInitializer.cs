@@ -1,4 +1,6 @@
-namespace PI.ToDoMng.WebApi.Database;
+using PI.ToDoMng.WebApi.Domain.Entities;
+
+namespace PI.ToDoMng.WebApi.Infrastructure.Database;
 
 public static class DbInitializer
 {
@@ -7,7 +9,7 @@ public static class DbInitializer
         var toDoItem = new ToDoItem(0, "Item 1", "Description", false, DateTime.Now);
         var toDoItem2 = new ToDoItem(0, "Item 2", "Description", false, DateTime.Now);
         var toDoItem3 = new ToDoItem(0, "Item 3", "Description", false, DateTime.Now);
-        
+
         context.ToDoItems.Add(toDoItem);
         context.ToDoItems.Add(toDoItem2);
         context.ToDoItems.Add(toDoItem3);
