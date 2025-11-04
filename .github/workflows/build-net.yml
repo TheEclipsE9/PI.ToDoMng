@@ -26,4 +26,4 @@ jobs:
       run: dotnet build ./src/PI.ToDoMng.sln --no-restore
 
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ./src/PI.ToDoMng.sln --no-build --verbosity normal
