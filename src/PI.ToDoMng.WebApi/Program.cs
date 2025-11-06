@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PI.ToDoMng.WebApi;
 using PI.ToDoMng.WebApi.Api.Endpoints;
 using PI.ToDoMng.WebApi.Application.Services;
+using PI.ToDoMng.WebApi.Domain.Interfaces;
 using PI.ToDoMng.WebApi.Infrastructure.Database;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     }));
 
 builder.Services.AddScoped<AuthService>();
+
+builder.Services.AddSingleton<ISessionStore, SessionStore>();
 
 var app = builder.Build();
 
