@@ -1,8 +1,8 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using PI.ToDoMng.WebApi.Api.Models;
-using PI.ToDoMng.WebApi.Application.DTOs;
-using PI.ToDoMng.WebApi.Application.Services;
+using PI.ToDoMng.WebApi.Application.Helpers;
+using PI.ToDoMng.WebApi.Domain.Interfaces;
 
 namespace PI.ToDoMng.WebApi.Api.Endpoints;
 
@@ -10,17 +10,49 @@ public static class AuthEndpoints
 {
     public static void Map(WebApplication app)
     {
-        app.MapGet(
+        app.MapPost(
             "api/auth/login",
             ([FromBody] LoginRequest requestModel,
-             [FromServices] AuthService authService) =>
+             [FromServices] IAuthService authService) =>
             {
-                var result = authService.TryLogin(new LoginRequestDto(requestModel.Username, requestModel.Password));
+                var result = authService.Login(requestModel.Username, requestModel.Password);
 
                 if (result.IsSuccess)
-                    return Results.Ok(new LoginResponse(result.Token, 0));
+                    return Results.Ok(new LoginResponse(result.Token, result.ExpiresAt.Value));
 
                 return Results.Unauthorized();
+            }
+        );
+
+        app.MapPost(
+            "api/auth/logout",
+            (HttpContext context,
+             [FromServices] IAuthService authService) =>
+            {
+                var token = HttpContextHelper.ExtractBearerToken(context);
+                if (string.IsNullOrEmpty(token))
+                    return Results.Unauthorized();
+
+                authService.Logout(token);
+
+                return Results.NoContent();
+            }
+        );
+
+        app.MapGet(
+            "api/auth/me",
+            (HttpContext context,
+             [FromServices] IAuthService authService) =>
+            {
+                var token = HttpContextHelper.ExtractBearerToken(context);
+                if (string.IsNullOrEmpty(token))
+                    return Results.Unauthorized();
+
+                var session = authService.ValidateToken(token);
+                if (session is null)
+                    return Results.Unauthorized();
+
+                return Results.Ok(new MeResponse(session.Token, session.UserId, session.CreatedAt, session.ExpiresAt));
             }
         );
     }

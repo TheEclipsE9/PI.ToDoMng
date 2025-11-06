@@ -19,9 +19,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         msSqlOptions.CommandTimeout(timeOut);
     }));
 
-builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddSingleton<ISessionStore, SessionStore>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
