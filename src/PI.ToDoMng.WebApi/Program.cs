@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PI.ToDoMng.WebApi;
 using PI.ToDoMng.WebApi.Api.Endpoints;
+using PI.ToDoMng.WebApi.Api.Middleware;
 using PI.ToDoMng.WebApi.Application.Services;
 using PI.ToDoMng.WebApi.Domain.Interfaces;
 using PI.ToDoMng.WebApi.Infrastructure.Database;
@@ -25,6 +26,8 @@ builder.Services.AddSingleton<ISessionStore, SessionStore>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
+
+app.UseTokenValidationMiddleware();
 
 AuthEndpoints.Map(app);
 

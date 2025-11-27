@@ -12,17 +12,9 @@ public class SessionStore : ISessionStore
 
     public Session CreateSession(int userId)
     {
-        string token = OpaqueToken.GenerateToken();
-        DateTime createdAt = DateTime.UtcNow;
-        var session = new Session
-        {
-            Token = token,
-            UserId = userId,
-            CreatedAt = createdAt,
-            ExpiresAt = createdAt.AddMinutes(5)
-        };
+        var session = Session.NewSession(userId);
 
-        if (_sessionsCache.TryAdd(token, session) == false)
+        if (_sessionsCache.TryAdd(session.Token, session) == false)
             throw new Exception("Failed to add session to cache.");
 
         return session;
@@ -30,12 +22,10 @@ public class SessionStore : ISessionStore
 
     public Session? GetSession(string token)
     {
-        var isSuccess = _sessionsCache.TryGetValue(token, out Session session);
-
-        if (isSuccess == false)
+        if (!_sessionsCache.TryGetValue(token, out Session session))
             return null;
 
-        if (session.ExpiresAt <= DateTime.UtcNow)
+        if (session.IsValid() == false)
         {
             InvalidateSession(token);
             return null;

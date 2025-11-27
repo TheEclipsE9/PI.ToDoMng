@@ -2,6 +2,8 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using PI.ToDoMng.WebApi.Api.Models;
 using PI.ToDoMng.WebApi.Application.Helpers;
+using PI.ToDoMng.WebApi.Domain;
+using PI.ToDoMng.WebApi.Domain.Entities;
 using PI.ToDoMng.WebApi.Domain.Interfaces;
 
 namespace PI.ToDoMng.WebApi.Api.Endpoints;
@@ -29,11 +31,11 @@ public static class AuthEndpoints
             (HttpContext context,
              [FromServices] IAuthService authService) =>
             {
-                var token = HttpContextHelper.ExtractBearerToken(context);
-                if (string.IsNullOrEmpty(token))
+                Session? session = context.Items[Constants.Auth.SESSION_ITEM_KEY] as Session;
+                if (session is null)
                     return Results.Unauthorized();
 
-                authService.Logout(token);
+                authService.Logout(session.Token);
 
                 return Results.NoContent();
             }
@@ -44,11 +46,7 @@ public static class AuthEndpoints
             (HttpContext context,
              [FromServices] IAuthService authService) =>
             {
-                var token = HttpContextHelper.ExtractBearerToken(context);
-                if (string.IsNullOrEmpty(token))
-                    return Results.Unauthorized();
-
-                var session = authService.ValidateToken(token);
+                Session? session = context.Items[Constants.Auth.SESSION_ITEM_KEY] as Session;
                 if (session is null)
                     return Results.Unauthorized();
 
