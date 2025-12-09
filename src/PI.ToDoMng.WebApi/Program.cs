@@ -1,9 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PI.ToDoMng.WebApi;
 using PI.ToDoMng.WebApi.Api.Endpoints;
-using PI.ToDoMng.WebApi.Api.Middleware;
 using PI.ToDoMng.WebApi.Application.Services;
+using PI.ToDoMng.WebApi.Authentication;
 using PI.ToDoMng.WebApi.Domain.Interfaces;
 using PI.ToDoMng.WebApi.Infrastructure.Database;
 
@@ -25,9 +24,21 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddSingleton<ISessionStore, SessionStore>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = OpaqueTokenAuthenticationOptions.Scheme;
+    options.DefaultChallengeScheme = OpaqueTokenAuthenticationOptions.Scheme;
+}).AddScheme<OpaqueTokenAuthenticationOptions, OpaqueTokenHandler>(OpaqueTokenAuthenticationOptions.Scheme, options =>
+{
+    options.CustomOption = "Custom Option From Program.cs";
+});
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
-app.UseTokenValidationMiddleware();
+app.UseAuthentication();
+app.UseAuthorization();
 
 AuthEndpoints.Map(app);
 

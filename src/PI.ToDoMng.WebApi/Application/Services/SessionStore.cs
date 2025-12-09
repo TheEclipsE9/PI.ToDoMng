@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Concurrent;
-using PI.ToDoMng.WebApi.Application.Utilities;
 using PI.ToDoMng.WebApi.Domain.Entities;
 using PI.ToDoMng.WebApi.Domain.Interfaces;
 
@@ -20,18 +18,18 @@ public class SessionStore : ISessionStore
         return session;
     }
 
-    public Session? GetSession(string token)
+    public bool TryGetValidSession(string token, out Session session)
     {
-        if (!_sessionsCache.TryGetValue(token, out Session session))
-            return null;
+        if (!_sessionsCache.TryGetValue(token, out session!))
+            return false;
 
         if (session.IsValid() == false)
         {
             InvalidateSession(token);
-            return null;
+            return false;
         }
 
-        return session;
+        return true;
     }
 
     public void InvalidateSession(string token)

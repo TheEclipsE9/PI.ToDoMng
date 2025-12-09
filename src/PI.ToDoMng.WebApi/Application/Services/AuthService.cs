@@ -1,7 +1,4 @@
-using System;
-using System.Security.Cryptography;
 using PI.ToDoMng.WebApi.Application.DTOs;
-using PI.ToDoMng.WebApi.Application.Utilities;
 using PI.ToDoMng.WebApi.Domain.Entities;
 using PI.ToDoMng.WebApi.Domain.Interfaces;
 
@@ -35,10 +32,5 @@ public class AuthService : IAuthService
     public void Logout(string token)
     {
         _sessionStore.InvalidateSession(token);
-    }
-
-    public Session? ValidateToken(string token)
-    {
-        return _sessionStore.GetSession(token);
     }
 }

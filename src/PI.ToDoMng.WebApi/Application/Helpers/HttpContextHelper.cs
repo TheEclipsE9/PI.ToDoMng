@@ -4,16 +4,24 @@ namespace PI.ToDoMng.WebApi.Application.Helpers;
 
 public static class HttpContextHelper
 {
-    public static string? ExtractBearerToken(HttpContext context)
+    public static bool TryExtractBearerToken(this IHeaderDictionary headers, out string token)
     {
-        if (!context.Request.Headers.TryGetValue("Authorization", out var authHeader))
-            return null;
+        token = string.Empty;
+
+        if (!headers.TryGetValue("Authorization", out var authHeader))
+            return false;
 
         var value = authHeader.ToString();
 
         if (string.IsNullOrWhiteSpace(value) || !value.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
-            return null;
+            return false;
 
-        return value.Split(' ', 2).Last();
+        var tokenValue = value.Split(' ', 2).Last();
+
+        if (string.IsNullOrWhiteSpace(tokenValue))
+            return false;
+
+        token = tokenValue;
+        return true;
     }
 }

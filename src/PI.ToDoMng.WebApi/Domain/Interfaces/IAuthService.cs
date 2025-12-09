@@ -8,5 +8,4 @@ public interface IAuthService
 {
     LoginResultDto Login(string username, string password);
     void Logout(string token);
-    Session? ValidateToken(string token);
 }

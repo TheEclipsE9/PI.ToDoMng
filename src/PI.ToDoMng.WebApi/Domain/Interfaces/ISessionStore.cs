@@ -7,7 +7,7 @@ public interface ISessionStore
 {
     Session CreateSession(int userId);
 
-    Session? GetSession(string token);
+    bool TryGetValidSession(string token, out Session session);
 
     void InvalidateSession(string token);
 }
